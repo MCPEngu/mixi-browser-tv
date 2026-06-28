@@ -8,3 +8,6 @@ repository:
 - https://github.com/mozilla-mobile/firefox-tv.wiki.git
 
 Please also see this project's top-level [README.md](../README.md)
+
+For upstream Mozilla dependency and feature porting guidance, see
+[upstream-maintenance.md](upstream-maintenance.md).

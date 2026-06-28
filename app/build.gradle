@@ -20,8 +20,8 @@ apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 31
+    buildToolsVersion '34.0.0'
 
     defaultConfig {
         applicationId "org.mozilla.tv.firefox"
@@ -181,7 +181,7 @@ dependencies {
     // Required to override android.support lib in GeckoView dependency (uses palette-v7:26.1.0)
     geckoImplementation "androidx.palette:palette:$androidx_version"
     geckoImplementation "org.mozilla.components:browser-engine-gecko-nightly:$moz_components_version"
-    geckoImplementation "org.mozilla.geckoview:geckoview-nightly"
+    geckoImplementation "org.mozilla.geckoview:geckoview-nightly:$geckoview_version"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"

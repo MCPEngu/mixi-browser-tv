@@ -32,7 +32,7 @@ class PinnedTileScreenshotStoreUnitTest {
     @Before
     fun setUp() {
         appContext = ApplicationProvider.getApplicationContext()
-        appContext.filesDir.listFiles().forEach { it.deleteRecursively() }
+        appContext.filesDir.listFiles()?.forEach { it.deleteRecursively() }
         uuid = UUID.randomUUID()
     }
 
@@ -44,7 +44,7 @@ class PinnedTileScreenshotStoreUnitTest {
         PinnedTileScreenshotStore.saveAsync(context, UUID.randomUUID(), getNonBlankBitmap()).join()
 
         assertEquals(2,
-                PinnedTileScreenshotStore.getFileForUUID(context, uuid).parentFile.list().size)
+                PinnedTileScreenshotStore.getFileForUUID(context, uuid).parentFile!!.list()!!.size)
     }
 
     @Test
@@ -55,9 +55,9 @@ class PinnedTileScreenshotStoreUnitTest {
 
         PinnedTileScreenshotStore.saveAsync(appContext, uuid, bitmap).join()
 
-        val parentDir = PinnedTileScreenshotStore.getFileForUUID(appContext, uuid).parentFile
+        val parentDir = PinnedTileScreenshotStore.getFileForUUID(appContext, uuid).parentFile!!
         parentDir.mkdirs() // so we can easily assert without crashing if dirs weren't made.
-        assertEquals(0, parentDir.list().size)
+        assertEquals(0, parentDir.list()!!.size)
     }
 
     @Test
@@ -70,14 +70,14 @@ class PinnedTileScreenshotStoreUnitTest {
     @Test
     fun testRemoveAsyncRemovesFile() = runBlocking {
         val file = PinnedTileScreenshotStore.getFileForUUID(appContext, uuid)
-        file.parentFile.mkdirs()
+        file.parentFile!!.mkdirs()
         file.createNewFile()
         file.writeText("Some test text")
-        assertEquals(1, file.parentFile.list().size)
+        assertEquals(1, file.parentFile!!.list()!!.size)
 
         PinnedTileScreenshotStore.removeAsync(appContext, uuid).join()
 
-        assertEquals(0, file.parentFile.list().size)
+        assertEquals(0, file.parentFile!!.list()!!.size)
     }
 
     /**
@@ -86,13 +86,13 @@ class PinnedTileScreenshotStoreUnitTest {
      */
     @Test
     fun testRemoveAsyncRemovesFileWrittenBySaveAsync() = runBlocking {
-        val parentFile = PinnedTileScreenshotStore.getFileForUUID(appContext, uuid).parentFile
+        val parentFile = PinnedTileScreenshotStore.getFileForUUID(appContext, uuid).parentFile!!
         PinnedTileScreenshotStore.saveAsync(appContext, uuid, getNonBlankBitmap()).join()
-        assertEquals(1, parentFile.list().size)
+        assertEquals(1, parentFile.list()!!.size)
 
         PinnedTileScreenshotStore.removeAsync(appContext, uuid).join()
 
-        assertEquals(0, parentFile.list().size)
+        assertEquals(0, parentFile.list()!!.size)
     }
 }
 
