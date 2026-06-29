@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId "org.mozilla.tv.firefox"
         minSdkVersion 22
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
         // override this with a generated versionCode at build time.
         versionName "4.8"
